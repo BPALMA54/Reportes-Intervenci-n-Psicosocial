@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Diagnóstico Comunitario · Intervención Psicosocial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
+<style>
+/* ══════════════════════════════════════════════
+   RESET & ROOT
+══════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0d0d0d;
+  --ink2:#2a2a2a;
+  --muted:#6b6b6b;
+  --border:#e2e2e2;
+  --surface:#ffffff;
+  --bg:#f7f5f0;
+
+  --coral:#FF4D3A;
+  --coral-light:#FFF0EE;
+  --coral-dark:#C0281A;
+  --teal:#00B894;
+  --teal-light:#E0FAF4;
+  --teal-dark:#007A60;
+  --indigo:#4B63FF;
+  --indigo-light:#EEF0FF;
+  --amber:#F59E0B;
+  --amber-light:#FFFBEB;
+
+  --r:10px;
+  --r-lg:16px;
+  --r-xl:22px;
+  --font-head:'Syne',sans-serif;
+  --font-body:'Plus Jakarta Sans',sans-serif;
+  --shadow:0 4px 24px rgba(0,0,0,0.07);
+  --shadow-lg:0 8px 40px rgba(0,0,0,0.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6;min-height:100vh}
+
+/* ══════════════════════════════════════════════
+   HERO HEADER
+══════════════════════════════════════════════ */
+.app-hero{
+  background:var(--ink);
+  position:relative;overflow:hidden;
+  padding:0;
+}
+.hero-pattern{
+  position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(255,77,58,0.25) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(75,99,255,0.2) 0%, transparent 45%),
+    radial-gradient(circle at 60% 80%, rgba(0,184,148,0.15) 0%, transparent 40%);
+}
+.hero-grid{
+  position:absolute;inset:0;opacity:0.06;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.hero-inner{
+  position:relative;z-index:2;
+  max-width:900px;margin:0 auto;
+  padding:3rem 2rem 2.5rem;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;
+  flex-wrap:wrap;
+}
+.hero-left{}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
+  color:rgba(255,255,255,0.8);font-size:11px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.1em;
+  padding:5px 12px;border-radius:20px;margin-bottom:1rem;
+}
+.hero-tag .ti{font-size:13px;color:var(--coral)}
+.hero-title{
+  font-family:var(--font-head);font-size:clamp(2rem,5vw,3.2rem);
+  color:#fff;line-height:1.05;margin-bottom:0.5rem;
+  font-weight:800;
+}
+.hero-title span{color:var(--coral)}
+.hero-course{font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:4px}
+.hero-prof{
+  font-size:14px;font-weight:600;color:rgba(255,255,255,0.9);
+  display:flex;align-items:center;gap:7px;
+}
+.hero-prof .ti{font-size:15px;color:var(--teal)}
+.hero-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.hero-stat{
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
+  border-radius:var(--r);padding:14px 18px;text-align:center;min-width:90px;
+}
+.hero-stat-val{font-family:var(--font-head);font-size:1.8rem;color:#fff;line-height:1}
+.hero-stat-lbl{font-size:11px;color:rgba(255,255,255,0.5);margin-top:3px}
+
+/* ══════════════════════════════════════════════
+   NAV TABS
+══════════════════════════════════════════════ */
+.app-nav{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:90;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+.app-nav-inner{
+  max-width:900px;margin:0 auto;
+  display:flex;align-items:center;
+  padding:0 2rem;gap:2px;
+  overflow-x:auto;
+}
+.nav-tab{
+  display:flex;align-items:center;gap:7px;
+  padding:1rem 1.1rem;
+  font-size:13px;font-weight:500;color:var(--muted);
+  border:none;background:none;cursor:pointer;
+  border-bottom:2.5px solid transparent;
+  white-space:nowrap;
+  font-family:var(--font-body);
+  transition:color .15s,border-color .15s;
+}
+.nav-tab .ti{font-size:16px}
+.nav-tab:hover{color:var(--ink)}
+.nav-tab.active{color:var(--coral);border-bottom-color:var(--coral)}
+.nav-tab .tab-num{
+  background:var(--coral);color:#fff;
+  font-size:10px;font-weight:700;
+  width:18px;height:18px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  opacity:0;transform:scale(0.5);transition:all .2s;
+}
+.nav-tab.done .tab-num{opacity:1;transform:scale(1)}
+.nav-spacer{flex:1}
+.btn-docente{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 14px;
+  background:var(--ink);color:#fff;
+  border:none;border-radius:var(--r);
+  font-size:12px;font-weight:600;
+  font-family:var(--font-body);
+  cursor:pointer;white-space:nowrap;
+  transition:background .15s;
+  margin-left:8px;
+}
+.btn-docente:hover{background:#333}
+.btn-docente .ti{font-size:15px}
+
+/* ══════════════════════════════════════════════
+   MAIN CONTENT AREA
+══════════════════════════════════════════════ */
+.app-body{max-width:900px;margin:0 auto;padding:2rem 2rem 5rem}
+
+.view{display:none}
+.view.active{display:block}
+
+/* ══════════════════════════════════════════════
+   STEP CARDS
+══════════════════════════════════════════════ */
+.step-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-xl);
+  margin-bottom:1.25rem;
+  overflow:hidden;
+  transition:box-shadow .2s;
+}
+.step-card:hover{box-shadow:var(--shadow)}
+.step-card-head{
+  display:flex;align-items:center;gap:16px;
+  padding:1.5rem 1.75rem;
+  border-bottom:1px solid var(--border);
+}
+.step-icon{
+  width:46px;height:46px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+}
+.step-icon.coral{background:var(--coral-light);color:var(--coral)}
+.step-icon.teal{background:var(--teal-light);color:var(--teal-dark)}
+.step-icon.indigo{background:var(--indigo-light);color:var(--indigo)}
+.step-icon.amber{background:var(--amber-light);color:var(--amber)}
+.step-card-head h2{
+  font-family:var(--font-head);font-size:1.15rem;color:var(--ink);
+  margin-bottom:2px;
+}
+.step-card-head p{font-size:13px;color:var(--muted)}
+.step-card-body{padding:1.5rem 1.75rem}
+
+/* ══════════════════════════════════════════════
+   FORM FIELDS
+══════════════════════════════════════════════ */
+.field{margin-bottom:1.1rem}
+.field:last-child{margin-bottom:0}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.fg2{grid-template-columns:1fr}}
+
+label{
+  display:block;
+  font-size:12px;font-weight:600;
+  color:var(--ink2);text-transform:uppercase;
+  letter-spacing:0.06em;margin-bottom:6px;
+}
+label .hint{text-transform:none;font-weight:400;color:var(--muted);letter-spacing:0}
+
+input[type=text],input[type=url],input[type=date],input[type=password],select,textarea{
+  width:100%;font-family:var(--font-body);
+  font-size:14px;color:var(--ink);
+  background:#fafaf9;border:1.5px solid var(--border);
+  border-radius:var(--r);padding:10px 13px;
+  transition:border-color .15s,box-shadow .15s;
+  appearance:none;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;
+  border-color:var(--coral);
+  box-shadow:0 0 0 3px rgba(255,77,58,0.1);
+  background:#fff;
+}
+textarea{resize:vertical;min-height:90px;line-height:1.6}
+select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;
+}
+
+/* checkboxes */
+.check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:7px;margin-top:6px}
+.ck{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r);
+  cursor:pointer;font-size:13px;color:var(--ink2);
+  background:#fafaf9;transition:all .15s;font-weight:400;
+}
+.ck input{width:15px;height:15px;flex-shrink:0;accent-color:var(--coral);cursor:pointer;
+  border:none;padding:0;background:none;box-shadow:none}
+.ck:hover{border-color:var(--coral);background:var(--coral-light)}
+.ck:has(input:checked){background:var(--coral-light);border-color:var(--coral);color:var(--coral-dark);font-weight:500}
+
+/* radio pills */
+.radio-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+.rp{
+  padding:8px 18px;border:1.5px solid var(--border);
+  border-radius:20px;cursor:pointer;font-size:13px;
+  background:#fafaf9;color:var(--muted);
+  transition:all .15s;font-weight:500;
+}
+.rp input{display:none}
+.rp:has(input:checked){background:var(--coral);color:#fff;border-color:var(--coral)}
+
+/* tip box */
+.tip{
+  background:var(--amber-light);border-left:3px solid var(--amber);
+  border-radius:0 var(--r) var(--r) 0;
+  padding:0.875rem 1rem;
+  font-size:13px;color:#78350F;line-height:1.6;margin:.75rem 0 1rem;
+}
+.tip strong{color:#92400E}
+
+/* sesion block */
+.ses-block{
+  border:1.5px solid var(--border);border-radius:var(--r-lg);
+  padding:1.25rem;margin-bottom:.875rem;background:#fafaf9;
+}
+.ses-label{
+  font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--teal-dark);font-weight:700;margin-bottom:.875rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.btn-del-ses{
+  background:none;border:none;cursor:pointer;
+  color:var(--muted);font-size:17px;padding:2px;transition:color .15s;
+}
+.btn-del-ses:hover{color:var(--coral)}
+
+.btn-add-ses{
+  width:100%;padding:11px;
+  border:2px dashed var(--border);
+  border-radius:var(--r-lg);background:transparent;
+  cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);
+  font-family:var(--font-body);
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  transition:all .15s;
+}
+.btn-add-ses:hover{border-color:var(--teal);color:var(--teal-dark);background:var(--teal-light)}
+.btn-add-ses .ti{font-size:17px}
+
+/* ══════════════════════════════════════════════
+   GUIDE TAB
+══════════════════════════════════════════════ */
+.guide-hero{
+  background:linear-gradient(135deg,var(--indigo) 0%,#6B7FFF 100%);
+  border-radius:var(--r-xl);padding:2rem;margin-bottom:1.25rem;
+  color:#fff;display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;
+}
+.guide-hero-icon{font-size:48px;opacity:.9}
+.guide-hero h2{font-family:var(--font-head);font-size:1.5rem;margin-bottom:4px}
+.guide-hero p{font-size:14px;opacity:.85;line-height:1.6}
+
+.guide-steps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:1.25rem}
+.gs{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:1.25rem;
+}
+.gs-num{
+  width:32px;height:32px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-size:14px;font-weight:800;
+  margin-bottom:.75rem;
+}
+.gs-num.c{background:var(--coral-light);color:var(--coral)}
+.gs-num.t{background:var(--teal-light);color:var(--teal-dark)}
+.gs-num.i{background:var(--indigo-light);color:var(--indigo)}
+.gs-num.a{background:var(--amber-light);color:var(--amber)}
+.gs h3{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.gs p{font-size:13px;color:var(--muted);line-height:1.6}
+
+.concept-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
+@media(max-width:580px){.concept-grid{grid-template-columns:1fr}}
+.concept-card{
+  border-radius:var(--r-lg);padding:1.25rem;
+}
+.concept-card.cc{background:var(--coral-light);border:1px solid rgba(255,77,58,.2)}
+.concept-card.ct{background:var(--teal-light);border:1px solid rgba(0,184,148,.2)}
+.concept-card.ci{background:var(--indigo-light);border:1px solid rgba(75,99,255,.2)}
+.concept-card h3{font-family:var(--font-head);font-size:1rem;margin-bottom:5px}
+.concept-card.cc h3{color:var(--coral-dark)}
+.concept-card.ct h3{color:var(--teal-dark)}
+.concept-card.ci h3{color:var(--indigo)}
+.concept-card p{font-size:13px;color:var(--ink2);line-height:1.6}
+
+/* ══════════════════════════════════════════════
+   SUBMIT
+══════════════════════════════════════════════ */
+.submit-wrap{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-xl);padding:2rem;text-align:center;
+}
+.btn-submit{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:14px 32px;width:100%;
+  background:var(--coral);color:#fff;
+  border:none;border-radius:var(--r-lg);
+  font-size:15px;font-weight:700;font-family:var(--font-body);
+  cursor:pointer;letter-spacing:.02em;
+  transition:background .15s,transform .1s;
+}
+.btn-submit:hover{background:var(--coral-dark)}
+.btn-submit:active{transform:scale(.98)}
+.btn-submit:disabled{opacity:.55;cursor:not-allowed}
+.btn-submit .ti{font-size:19px}
+.submit-note{font-size:12px;color:var(--muted);margin-top:.75rem}
+.submit-msg{
+  border-radius:var(--r);padding:11px 15px;
+  font-size:13px;margin-bottom:.875rem;
+  display:none;align-items:center;gap:8px;
+}
+.submit-msg.ok{background:#ECFDF5;color:#065F46;border:1px solid #6EE7B7;display:flex}
+.submit-msg.err{background:#FEF2F2;color:#7F1D1D;border:1px solid #FCA5A5;display:flex}
+
+/* ══════════════════════════════════════════════
+   DOCENTE PANEL
+══════════════════════════════════════════════ */
+/* Login modal */
+.modal-bg{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(13,13,13,.7);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;padding:1rem;
+}
+.modal-card{
+  background:var(--surface);border-radius:var(--r-xl);
+  width:100%;max-width:420px;padding:2.5rem 2rem;
+  box-shadow:var(--shadow-lg);text-align:center;
+}
+.modal-card .modal-ico{
+  width:60px;height:60px;border-radius:18px;
+  background:var(--ink);color:#fff;
+  font-size:24px;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.25rem;
+}
+.modal-card h2{font-family:var(--font-head);font-size:1.5rem;margin-bottom:4px}
+.modal-card p{font-size:14px;color:var(--muted);margin-bottom:1.5rem}
+.login-err{
+  background:#FEF2F2;color:#7F1D1D;
+  border:1px solid #FCA5A5;border-radius:var(--r);
+  padding:9px 13px;font-size:13px;margin-top:8px;
+  display:none;align-items:center;gap:7px;
+}
+.login-err.show{display:flex}
+.btn-cancel{
+  background:none;border:none;color:var(--muted);
+  font-size:13px;cursor:pointer;margin-top:1rem;
+  font-family:var(--font-body);
+  display:flex;align-items:center;gap:5px;justify-content:center;width:100%;
+}
+.btn-cancel:hover{color:var(--ink)}
+
+/* Panel content */
+.doc-topstrip{
+  background:var(--ink);border-radius:var(--r-xl);
+  padding:1.25rem 1.75rem;margin-bottom:1.25rem;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+.doc-top-left{display:flex;align-items:center;gap:12px}
+.doc-top-icon{
+  width:42px;height:42px;border-radius:12px;
+  background:var(--coral);color:#fff;font-size:20px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.doc-top-title{font-family:var(--font-head);font-size:1.1rem;color:#fff}
+.doc-top-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px}
+.doc-top-actions{display:flex;gap:8px}
+.btn-sm{
+  padding:7px 13px;border-radius:var(--r);font-size:12px;font-weight:600;
+  font-family:var(--font-body);cursor:pointer;display:flex;align-items:center;gap:5px;
+  border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);
+  transition:background .15s;
+}
+.btn-sm:hover{background:rgba(255,255,255,.15);color:#fff}
+
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+@media(max-width:580px){.stats-strip{grid-template-columns:repeat(2,1fr)}}
+.stat-box{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:1rem 1.1rem;
+}
+.stat-box .sv{font-family:var(--font-head);font-size:2rem;color:var(--coral);line-height:1}
+.stat-box .sl{font-size:11px;color:var(--muted);margin-top:4px}
+
+.doc-filters{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
+.search-wrap{
+  flex:1;min-width:180px;
+  display:flex;align-items:center;gap:8px;
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:0 11px;
+}
+.search-wrap .ti{font-size:16px;color:var(--muted);flex-shrink:0}
+.search-wrap input{
+  border:none;background:none;padding:9px 0;flex:1;
+  font-size:14px;font-family:var(--font-body);
+  box-shadow:none;
+}
+.search-wrap input:focus{outline:none;box-shadow:none;border:none}
+.doc-filters select{min-width:160px;width:auto}
+
+/* grupo cards */
+.grupo-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r-xl);margin-bottom:.875rem;
+  overflow:hidden;transition:box-shadow .15s,border-color .15s;
+  cursor:pointer;
+}
+.grupo-card:hover{border-color:var(--coral);box-shadow:0 4px 20px rgba(255,77,58,.1)}
+.gc-head{
+  padding:1.1rem 1.5rem;display:flex;
+  align-items:center;gap:14px;
+}
+.gc-av{
+  width:46px;height:46px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-head);font-size:14px;font-weight:800;
+  flex-shrink:0;
+}
+.gc-av.c0{background:var(--coral-light);color:var(--coral)}
+.gc-av.c1{background:var(--teal-light);color:var(--teal-dark)}
+.gc-av.c2{background:var(--indigo-light);color:var(--indigo)}
+.gc-av.c3{background:var(--amber-light);color:var(--amber)}
+.gc-info{flex:1;min-width:0}
+.gc-nombre{font-size:15px;font-weight:700;color:var(--ink)}
+.gc-sub{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gc-badges{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.badge{
+  font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;
+}
+.badge.modelo{background:var(--coral-light);color:var(--coral-dark)}
+.badge.fecha{background:var(--bg);color:var(--muted);border:1px solid var(--border)}
+.badge.ses{background:var(--teal-light);color:var(--teal-dark)}
+
+.gc-foot{
+  border-top:1px solid var(--border);
+  padding:.875rem 1.5rem;background:#fafaf9;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.gc-loc{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--muted)}
+.gc-loc .ti{font-size:15px;color:var(--teal-dark)}
+.gc-actions{margin-left:auto;display:flex;gap:7px}
+.btn-maps{
+  padding:6px 13px;border:1.5px solid var(--teal);border-radius:var(--r);
+  background:var(--teal-light);color:var(--teal-dark);font-size:12px;font-weight:600;
+  font-family:var(--font-body);cursor:pointer;
+  display:flex;align-items:center;gap:5px;text-decoration:none;
+  transition:background .15s;
+}
+.btn-maps:hover{background:var(--teal);color:#fff}
+.btn-ver{
+  padding:6px 14px;border:none;border-radius:var(--r);
+  background:var(--coral);color:#fff;font-size:12px;font-weight:700;
+  font-family:var(--font-body);cursor:pointer;
+  display:flex;align-items:center;gap:5px;
+  transition:background .15s;
+}
+.btn-ver:hover{background:var(--coral-dark)}
+
+.empty-doc{
+  text-align:center;padding:4rem 2rem;
+  color:var(--muted);
+}
+.empty-doc .ti{font-size:52px;display:block;margin-bottom:1rem;opacity:.4}
+.empty-doc p{font-size:15px}
+
+/* ══════════════════════════════════════════════
+   DETAIL MODAL
+══════════════════════════════════════════════ */
+.det-overlay{
+  position:fixed;inset:0;z-index:300;
+  background:rgba(13,13,13,.65);backdrop-filter:blur(4px);
+  display:none;align-items:flex-start;justify-content:center;
+  padding:1.5rem 1rem;overflow-y:auto;
+}
+.det-overlay.open{display:flex}
+.det-box{
+  background:var(--surface);border-radius:var(--r-xl);
+  width:100%;max-width:780px;
+  box-shadow:var(--shadow-lg);
+  margin:auto;
+}
+.det-head{
+  background:var(--ink);border-radius:var(--r-xl) var(--r-xl) 0 0;
+  padding:1.5rem 1.75rem;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.det-head-left h2{font-family:var(--font-head);font-size:1.35rem;color:#fff;margin-bottom:3px}
+.det-head-left p{font-size:13px;color:rgba(255,255,255,.55)}
+.det-close{
+  width:34px;height:34px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);
+  color:rgba(255,255,255,.7);font-size:19px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:background .15s;
+}
+.det-close:hover{background:rgba(255,255,255,.2);color:#fff}
+.det-body{padding:1.5rem 1.75rem}
+
+.det-sec{
+  margin-bottom:1.75rem;padding-bottom:1.75rem;
+  border-bottom:1px solid var(--border);
+}
+.det-sec:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.det-sec-title{
+  font-size:11px;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--muted);font-weight:700;margin-bottom:1rem;
+  display:flex;align-items:center;gap:7px;
+}
+.det-sec-title .ti{font-size:16px;color:var(--coral)}
+.det-field{margin-bottom:.875rem}
+.det-field:last-child{margin-bottom:0}
+.det-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.det-val{font-size:14px;color:var(--ink);line-height:1.6}
+.det-val.empty{color:var(--muted);font-style:italic}
+.det-tags{display:flex;flex-wrap:wrap;gap:5px}
+.det-tag{
+  font-size:12px;padding:4px 11px;border-radius:20px;
+  background:var(--coral-light);color:var(--coral-dark);
+  border:1px solid rgba(255,77,58,.2);font-weight:500;
+}
+.det-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;color:var(--teal-dark);
+  padding:6px 13px;border:1.5px solid var(--teal);
+  border-radius:var(--r);background:var(--teal-light);
+  text-decoration:none;font-weight:600;margin:3px 5px 3px 0;
+  transition:all .15s;
+}
+.det-link:hover{background:var(--teal);color:#fff}
+.det-link .ti{font-size:15px}
+.integ-pill{
+  display:inline-block;font-size:13px;
+  padding:5px 12px;border-radius:20px;
+  background:#fafaf9;border:1px solid var(--border);
+  color:var(--ink2);margin:3px 4px 3px 0;
+}
+.ses-det{
+  border:1px solid var(--border);border-radius:var(--r-lg);
+  padding:1rem 1.1rem;margin-bottom:.75rem;background:#fafaf9;
+}
+.ses-det-lbl{
+  font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.07em;color:var(--teal-dark);margin-bottom:.5rem;
+}
+.ses-det-meta{font-size:12px;color:var(--muted);margin-bottom:.5rem}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     HERO HEADER
+══════════════════════════════════════════ -->
+<header class="app-hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-tag"><i class="ti ti-map-search"></i> Campus María Auxiliadora</div>
+      <h1 class="hero-title">Diagnóstico<br/><span>Comunitario</span></h1>
+      <p class="hero-course">Modelos y Técnicas de Intervención Psicosocial · Psicología</p>
+      <p class="hero-prof"><i class="ti ti-user-circle"></i> Msc. Bryan Carlos Palma Díaz</p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat">
+        <div class="hero-stat-val" id="hs-grupos">0</div>
+        <div class="hero-stat-lbl">grupos</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val" id="hs-sesiones">0</div>
+        <div class="hero-stat-lbl">sesiones</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">P68</div>
+        <div class="hero-stat-lbl">período</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════
+     NAV
+══════════════════════════════════════════ -->
+<nav class="app-nav">
+  <div class="app-nav-inner">
+    <button class="nav-tab active" onclick="switchView('guia',this)">
+      <i class="ti ti-book-2"></i> Guía
+    </button>
+    <button class="nav-tab" onclick="switchView('grupo',this)">
+      <i class="ti ti-users"></i> Mi Grupo
+    </button>
+    <button class="nav-tab" onclick="switchView('comunidad',this)">
+      <i class="ti ti-map-pin"></i> Comunidad
+    </button>
+    <button class="nav-tab" onclick="switchView('diagnostico',this)">
+      <i class="ti ti-clipboard-list"></i> Diagnóstico
+    </button>
+    <button class="nav-tab" onclick="switchView('plano',this)">
+      <i class="ti ti-map-2"></i> Plano
+    </button>
+    <button class="nav-tab" onclick="switchView('paradigma',this)">
+      <i class="ti ti-brain"></i> Paradigma
+    </button>
+    <button class="nav-tab" onclick="switchView('propuesta',this)">
+      <i class="ti ti-bulb"></i> Propuesta
+    </button>
+    <button class="nav-tab" onclick="switchView('evidencias',this)">
+      <i class="ti ti-camera"></i> Evidencias
+    </button>
+    <div class="nav-spacer"></div>
+    <button class="btn-docente" onclick="abrirLogin()">
+      <i class="ti ti-lock"></i> Docente
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     BODY
+══════════════════════════════════════════ -->
+<main class="app-body">
+
+<!-- ── GUÍA ─────────────────────────────── -->
+<div class="view active" id="view-guia">
+  <div class="guide-hero">
+    <div class="guide-hero-icon"><i class="ti ti-map-search"></i></div>
+    <div>
+      <h2>¿Qué deben hacer en esta Parte 1?</h2>
+      <p>Cada grupo visita una comunidad real, levanta un diagnóstico participativo, identifica el paradigma y enfoque desde el que la comunidad vive sus problemas, y propone una intervención desde su modelo asignado.</p>
+    </div>
+  </div>
+
+  <div class="guide-steps-grid">
+    <div class="gs"><div class="gs-num c">1</div><h3>Primer contacto</h3><p>Identifíquense ante líderes o moradores. Expliquen el propósito académico. Soliciten autorización para la visita.</p></div>
+    <div class="gs"><div class="gs-num t">2</div><h3>Recorrido de campo</h3><p>Caminen el sector completo antes de entrevistar. Observen infraestructura, servicios y zonas de riesgo. Elaboren el croquis.</p></div>
+    <div class="gs"><div class="gs-num i">3</div><h3>Levantamiento de datos</h3><p>Apliquen el formulario durante entrevistas informales o grupos focales. Registren inmediatamente para no perder datos.</p></div>
+    <div class="gs"><div class="gs-num a">4</div><h3>Identificar paradigma</h3><p>Pregunten <em>cómo ven ellos sus problemas</em>. ¿Lo atribuyen a factores externos, individuales o relacionales?</p></div>
+    <div class="gs"><div class="gs-num c">5</div><h3>Fotografiar y documentar</h3><p>Suban fotos a Drive y peguen el link en el formulario. El plano puede ser un croquis a mano fotografiado.</p></div>
+    <div class="gs"><div class="gs-num t">6</div><h3>Propuesta de intervención</h3><p>Articulen los hallazgos con su modelo asignado. Definan fases, técnicas y objetivo general.</p></div>
+  </div>
+
+  <div class="concept-grid">
+    <div class="concept-card cc">
+      <h3>Paradigma</h3>
+      <p>Marco filosófico desde el que se comprende la realidad social. ¿El problema es del individuo o del sistema?</p>
+    </div>
+    <div class="concept-card ct">
+      <h3>Enfoque</h3>
+      <p>Perspectiva operativa (derechos, género, sistémico, comunitario). Define <em>desde dónde</em> se interviene.</p>
+    </div>
+    <div class="concept-card ci">
+      <h3>Modelo</h3>
+      <p>Marco metodológico que guía las técnicas y fases de la intervención psicosocial asignada a su grupo.</p>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-card-body">
+      <div class="tip" style="margin:0">
+        <strong>Recuerden:</strong> No son auditores, son observadores participantes. La comunidad no está siendo evaluada — está siendo escuchada. Esto es clave para que las personas se abran. Registren en el formulario lo antes posible, incluyendo el diario de campo con sus propias impresiones.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MI GRUPO ──────────────────────────── -->
+<div class="view" id="view-grupo">
+  <div class="step-card">
+    <div class="step-card-head">
+      <div class="step-icon coral"><i class="ti ti-users"></i></div>
+      <div><h2>Identificación del grupo</h2><p>Datos del equipo y modelo asignado</p></div>
+    </div>
+    <div class="step-card-body">
+      <div class="fg2">
+        <div class="field">
+          <label>Número de grupo</label>
+          <select id="f-grupo">
+            <option value="">Seleccionar…</option>
+            <option>Grupo 1</option><option>Grupo 2</option><option>Grupo 3</option>
+            <option>Grupo 4</option><option>Grupo 5</option><option>Grupo 6</option>
+            <option>Grupo 7</option><option>Grupo 8</option><option>Grupo 9</option>
+            <option>Grupo 10</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Fecha de envío</label>
+          <input type="date" id="f-fecha"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Integrantes <span class="hint">— nombres completos, separados por coma</span></label>
+        <textarea id="f-integrantes" rows="3" placeholder="Ej: Ana Martínez Solís, Luis Cedeño Vera, Karla Pinos Andrade…"></textarea>
+      </div>
+      <div class="field">
+        <label>Modelo de intervención psicosocial asignado</label>
+        <select id="f-modelo" onchange="document.getElementById('campo-otro').style.display=this.value==='Otro'?'block':'none'">
+          <option value="">Seleccionar…</option>
+          <option>Modelo de Intervención en Crisis</option>
+          <option>Modelo Sistémico</option>
+          <option>Modelo Cognitivo-Conductual Comunitario</option>
+          <option>Modelo de Redes de Apoyo Social</option>
+          <option>Modelo de Empoderamiento</option>
+          <option>Modelo Ecológico de Bronfenbrenner</option>
+          <option>Modelo de Acción Psicosocial</option>
+          <option>Modelo Comunitario de Salud Mental</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="field" id="campo-otro" style="display:none">
+        <label>Especifique el modelo</label>
+        <input type="text" id="f-modelo-otro" placeholder="Nombre del modelo…"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── COMUNIDAD ─────────────────────────── -->
+<div class="view" id="view-comunidad">
+  <div class="step-card">
+    <div class="step-card-head">
+      <div class="step-icon teal"><i class="ti ti-map-pin"></i></div>
+      <div><h2>Datos de la comunidad</h2><p>Identificación precisa del sector elegido</p></div>
+    </div>
+    <div class="step-card-body">
+      <div class="fg2">
+        <div class="field">
+          <label>Nombre del sector / comunidad</label>
+          <input type="text" id="f-comunidad" placeholder="Ej: Coop. Las Orquídeas, bloque norte"/>
+        </div>
+        <div class="field">
+          <label>Ciudad / cantón</label>
+          <input type="text" id="f-ciudad" placeholder="Ej: Guayaquil"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Dirección o referencia</label>
+        <input type="text" id="f-direccion" placeholder="Ej: Av. del Bombero y Calle 10, sector noroeste"/>
+      </div>
+      <div class="field">
+        <label>Link de Google Maps <span class="hint">— Maps → compartir → copiar enlace</span></label>
+        <input type="url" id="f-maps" placeholder="https://maps.google.com/…"/>
+      </div>
+      <div class="field">
+        <label>Fotos del sector — link a carpeta Drive <span class="hint">— Drive → carpeta → compartir con "cualquiera con el link"</span></label>
+        <input type="url" id="f-fotos-comunidad" placeholder="https://drive.google.com/drive/folders/…"/>
+      </div>
+      <div class="field">
+        <label>Descripción general de la comunidad</label>
+        <textarea id="f-desc-comunidad" rows="4" placeholder="Tipo de vivienda, accesos, ambiente general, habitantes aproximados, actividad económica…"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DIAGNÓSTICO ───────────────────────── -->
+<div class="view" id="view-diagnostico">
+  <div class="step-card">
+    <div class="step-card-head">
+      <div class="step-icon indigo"><i class="ti ti-clipboard-list"></i></div>
+      <div><h2>Diagnóstico comunitario</h2><p>Necesidades, servicios y problemáticas identificadas</p></div>
+    </div>
+    <div class="step-card-body">
+      <div class="field">
+        <label>Grupos poblacionales predominantes</label>
+        <div class="check-grid">
+          <label class="ck"><input type="checkbox" name="demo" value="Niños y adolescentes"/> Niños y adolescentes</label>
+          <label class="ck"><input type="checkbox" name="demo" value="Jóvenes adultos"/> Jóvenes adultos</label>
+          <label class="ck"><input type="checkbox" name="demo" value="Adultos mayores"/> Adultos mayores</label>
+          <label class="ck"><input type="checkbox" name="demo" value="Mujeres jefas de hogar"/> Mujeres jefas de hogar</label>
+          <label class="ck"><input type="checkbox" name="demo" value="Migrantes"/> Migrantes</label>
+          <label class="ck"><input type="checkbox" name="demo" value="Personas con discapacidad"/> Personas con discapacidad</label>
+          <label class="ck ck-otro" id="ck-demo-otro-lbl"><input type="checkbox" name="demo" value="__otro__" onchange="toggleOtro('demo-otro',this)"/> Otro…</label>
+        </div>
+        <div id="demo-otro" style="display:none;margin-top:7px">
+          <input type="text" id="demo-otro-txt" placeholder="Especifique el grupo poblacional…"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Problemáticas identificadas</label>
+        <div class="check-grid">
+          <label class="ck"><input type="checkbox" name="prob" value="Inseguridad"/> Inseguridad</label>
+          <label class="ck"><input type="checkbox" name="prob" value="Salud"/> Salud</label>
+          <label class="ck"><input type="checkbox" name="prob" value="Educación"/> Educación</label>
+          <label class="ck"><input type="checkbox" name="prob" value="Desempleo"/> Desempleo</label>
+          <label class="ck"><input type="checkbox" name="prob" value="Infraestructura deficiente"/> Infraestructura</label>
+          <label class="ck"><input type="checkbox" name="prob" value="Violencia intrafamiliar"/> Violencia intrafamiliar</label>
+          <label class="ck"><input type="checkbox" name="prob" value="Consumo de sustancias"/> Consumo de sustancias</label>
+          <label class="ck"><input type="checkbox" name="prob" value="Falta de servicios básicos"/> Servicios básicos</label>
+          <label class="ck"><input type="checkbox" name="prob" value="Salud mental"/> Salud mental</label>
+          <label class="ck"><input type="checkbox" name="prob" value="Convivencia conflictiva"/> Convivencia conflictiva</label>
+          <label class="ck"><input type="checkbox" name="prob" value="__otro__" onchange="toggleOtro('prob-otro',this)"/> Otro…</label>
+        </div>
+        <div id="prob-otro" style="display:none;margin-top:7px">
+          <input type="text" id="prob-otro-txt" placeholder="Especifique la problemática…"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Descripción detallada de los problemas</label>
+        <textarea id="f-problemas" rows="5" placeholder="Describan lo que observaron y lo que la comunidad expresó. Incluyan citas textuales si es posible…"></textarea>
+      </div>
+      <div class="field">
+        <label>Servicios básicos presentes</label>
+        <div class="check-grid">
+          <label class="ck"><input type="checkbox" name="serv" value="Agua potable"/> Agua potable</label>
+          <label class="ck"><input type="checkbox" name="serv" value="Alcantarillado"/> Alcantarillado</label>
+          <label class="ck"><input type="checkbox" name="serv" value="Alumbrado público"/> Alumbrado público</label>
+          <label class="ck"><input type="checkbox" name="serv" value="Recolección de basura"/> Recolección de basura</label>
+          <label class="ck"><input type="checkbox" name="serv" value="Transporte público"/> Transporte público</label>
+          <label class="ck"><input type="checkbox" name="serv" value="Internet / telefonía"/> Internet / telefonía</label>
+          <label class="ck"><input type="checkbox" name="serv" value="__otro__" onchange="toggleOtro('serv-otro',this)"/> Otro…</label>
+        </div>
+        <div id="serv-otro" style="display:none;margin-top:7px">
+          <input type="text" id="serv-otro-txt" placeholder="Especifique el servicio…"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Zonas de riesgo identificadas</label>
+        <textarea id="f-riesgos" rows="3" placeholder="Ubicación, tipo de riesgo y nivel de gravedad percibido por la comunidad…"></textarea>
+      </div>
+      <div class="field">
+        <label>Recursos y fortalezas de la comunidad</label>
+        <textarea id="f-fortalezas" rows="3" placeholder="Parques, escuelas, líderes activos, organizaciones, redes de apoyo informales…"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PLANO ─────────────────────────────── -->
+<div class="view" id="view-plano">
+  <div class="step-card">
+    <div class="step-card-head">
+      <div class="step-icon amber"><i class="ti ti-map-2"></i></div>
+      <div><h2>Plano del sector</h2><p>Croquis elaborado durante el recorrido de campo</p></div>
+    </div>
+    <div class="step-card-body">
+      <div class="tip">
+        <strong>Instrucciones:</strong> Elaboren un croquis a mano durante el recorrido. Márquenlo con calles, zonas de riesgo, servicios y referencias. Fotográfíenlo, súbanlo a Google Drive y peguen el link aquí.
+      </div>
+      <div class="field">
+        <label>Link del plano / croquis en Drive</label>
+        <input type="url" id="f-plano" placeholder="https://drive.google.com/file/d/…"/>
+      </div>
+      <div class="field">
+        <label>Descripción del plano</label>
+        <textarea id="f-desc-plano" rows="3" placeholder="Qué elementos incluyeron, cómo lo elaboraron…"></textarea>
+      </div>
+      <div class="field">
+        <label>Referencias geográficas principales</label>
+        <input type="text" id="f-referencias" placeholder="Ej: iglesia esquina norte, mercado av. central, escuela fiscal calle 5…"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PARADIGMA ─────────────────────────── -->
+<div class="view" id="view-paradigma">
+  <div class="step-card">
+    <div class="step-card-head">
+      <div class="step-icon coral"><i class="ti ti-brain"></i></div>
+      <div><h2>Paradigma y enfoque comunitario</h2><p>Cómo la comunidad percibe y explica sus propios problemas</p></div>
+    </div>
+    <div class="step-card-body">
+      <div class="field">
+        <label>Narrativa directa de los informantes</label>
+        <textarea id="f-narrativa" rows="4" placeholder="Incluyan citas o paráfrasis. Ej: 'El señor Ramírez expresó que el problema principal es que los jóvenes no tienen dónde estudiar ni trabajar…'"></textarea>
+      </div>
+      <div class="field">
+        <label>Paradigma predominante identificado</label>
+        <div class="radio-row">
+          <label class="rp"><input type="radio" name="paradigma" value="Positivista"/> Positivista</label>
+          <label class="rp"><input type="radio" name="paradigma" value="Crítico-social"/> Crítico-social</label>
+          <label class="rp"><input type="radio" name="paradigma" value="Constructivista"/> Constructivista</label>
+          <label class="rp"><input type="radio" name="paradigma" value="Mixto"/> Mixto</label>
+          <label class="rp"><input type="radio" name="paradigma" value="__otro__" onchange="toggleOtro('paradigma-otro',this)"/> Otro…</label>
+        </div>
+        <div id="paradigma-otro" style="display:none;margin-top:7px">
+          <input type="text" id="paradigma-otro-txt" placeholder="Especifique el paradigma…"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Enfoques desde los que la comunidad vive sus problemas</label>
+        <div class="check-grid">
+          <label class="ck"><input type="checkbox" name="enfoque" value="Individual / clínico"/> Individual / clínico</label>
+          <label class="ck"><input type="checkbox" name="enfoque" value="Comunitario"/> Comunitario</label>
+          <label class="ck"><input type="checkbox" name="enfoque" value="Sistémico"/> Sistémico</label>
+          <label class="ck"><input type="checkbox" name="enfoque" value="De derechos"/> De derechos</label>
+          <label class="ck"><input type="checkbox" name="enfoque" value="De género"/> De género</label>
+          <label class="ck"><input type="checkbox" name="enfoque" value="Ecológico"/> Ecológico</label>
+          <label class="ck"><input type="checkbox" name="enfoque" value="__otro__" onchange="toggleOtro('enfoque-otro',this)"/> Otro…</label>
+        </div>
+        <div id="enfoque-otro" style="display:none;margin-top:7px">
+          <input type="text" id="enfoque-otro-txt" placeholder="Especifique el enfoque…"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Justificación de la selección</label>
+        <textarea id="f-justificacion" rows="4" placeholder="¿Por qué seleccionaron ese paradigma y enfoque? Fundamenten en lo observado y escuchado…"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PROPUESTA ─────────────────────────── -->
+<div class="view" id="view-propuesta">
+  <div class="step-card">
+    <div class="step-card-head">
+      <div class="step-icon teal"><i class="ti ti-bulb"></i></div>
+      <div><h2>Propuesta de intervención</h2><p>Articulación del diagnóstico con el modelo asignado</p></div>
+    </div>
+    <div class="step-card-body">
+      <div class="field">
+        <label>Síntesis del diagnóstico <span class="hint">— 3 a 5 oraciones</span></label>
+        <textarea id="f-sintesis" rows="3" placeholder="¿Cuál es la situación principal de esta comunidad?…"></textarea>
+      </div>
+      <div class="field">
+        <label>Articulación con el modelo de intervención</label>
+        <textarea id="f-articulacion" rows="4" placeholder="¿Qué elementos del modelo son pertinentes para esta comunidad? Pueden citar autores…"></textarea>
+      </div>
+      <div class="field">
+        <label>Técnicas del modelo que aplicarían <span class="hint">— separadas por coma</span></label>
+        <input type="text" id="f-tecnicas" placeholder="Ej: escucha activa, grupos focales, mapeo de redes, psicoeducación…"/>
+      </div>
+      <div class="field">
+        <label>Fase 1 — Primer acercamiento</label>
+        <textarea id="f-fase1" rows="3" placeholder="Presentación, rapport, identificación de actores clave…"></textarea>
+      </div>
+      <div class="field">
+        <label>Fase 2 — Intervención central</label>
+        <textarea id="f-fase2" rows="3" placeholder="Talleres, grupos de apoyo, trabajo con líderes…"></textarea>
+      </div>
+      <div class="field">
+        <label>Fase 3 — Cierre y seguimiento</label>
+        <textarea id="f-fase3" rows="3" placeholder="Evaluación, derivaciones, plan de sostenibilidad…"></textarea>
+      </div>
+      <div class="field">
+        <label>Objetivo general de la intervención</label>
+        <textarea id="f-objetivo" rows="2" placeholder="Ej: Fortalecer los recursos de afrontamiento comunitario ante…"></textarea>
+      </div>
+      <div class="field">
+        <label>Limitaciones del modelo en este contexto</label>
+        <textarea id="f-limitaciones" rows="3" placeholder="Reflexión crítica: obstáculos culturales, económicos o logísticos…"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── EVIDENCIAS ────────────────────────── -->
+<div class="view" id="view-evidencias">
+  <div class="step-card">
+    <div class="step-card-head">
+      <div class="step-icon indigo"><i class="ti ti-camera"></i></div>
+      <div><h2>Evidencias del trabajo de campo</h2><p>Sesiones de visita, diario de campo y documentos</p></div>
+    </div>
+    <div class="step-card-body">
+      <div class="tip">
+        <strong>Para cada visita:</strong> Creen una carpeta en Google Drive → suban fotos y documentos → configúrenla como pública para ver → peguen el link en el campo correspondiente.
+      </div>
+
+      <div id="sesion-1" class="ses-block">
+        <div class="ses-label">
+          Sesión / Visita 1
+        </div>
+        <div class="fg2">
+          <div class="field"><label>Fecha</label><input type="date" class="ses-fecha"/></div>
+          <div class="field"><label>Duración aprox.</label><input type="text" class="ses-duracion" placeholder="Ej: 2 horas"/></div>
+        </div>
+        <div class="field">
+          <label>Link a carpeta Drive con fotos de esta sesión</label>
+          <input type="url" class="ses-drive" placeholder="https://drive.google.com/drive/folders/…"/>
+        </div>
+        <div class="field">
+          <label>Descripción de lo realizado</label>
+          <textarea class="ses-desc" rows="3" placeholder="¿Qué actividades realizaron? ¿Con quiénes interactuaron? ¿Qué observaron?…"></textarea>
+        </div>
+      </div>
+
+      <div id="sesiones-extra"></div>
+
+      <button type="button" class="btn-add-ses" id="btn-add-ses" onclick="addSesion()">
+        <i class="ti ti-plus"></i> Agregar otra sesión / visita
+      </button>
+    </div>
+  </div>
+
+  <!-- PRESENTACIÓN PPTX -->
+  <div class="step-card" style="border-color:rgba(75,99,255,.35)">
+    <div class="step-card-head" style="background:var(--indigo-light)">
+      <div class="step-icon indigo"><i class="ti ti-presentation"></i></div>
+      <div>
+        <h2>Presentación de hallazgos</h2>
+        <p>Diapositivas para la exposición en clase — todos los puntos del diagnóstico consolidados</p>
+      </div>
+    </div>
+    <div class="step-card-body">
+      <div class="tip" style="background:var(--indigo-light);border-left-color:var(--indigo);color:#1e1b4b">
+        <strong>Requisito:</strong> La presentación debe incluir de forma consolidada <em>todos</em> los puntos levantados en esta app: datos de la comunidad, diagnóstico, plano, paradigma, enfoque y propuesta de intervención. Créenla en PowerPoint o Google Slides, expórtenla o súbanla a Drive y peguen el link aquí.
+      </div>
+      <div class="field">
+        <label>Link a la presentación en Google Drive <span class="hint">— PowerPoint (.pptx) o Google Slides — configurar como "cualquiera con el link puede ver"</span></label>
+        <input type="url" id="f-pptx" placeholder="https://drive.google.com/file/d/… o https://docs.google.com/presentation/…"/>
+      </div>
+      <div class="field">
+        <label>Número de diapositivas</label>
+        <input type="text" id="f-pptx-slides" placeholder="Ej: 15 diapositivas"/>
+      </div>
+      <div class="field">
+        <label>Integrante responsable de la presentación</label>
+        <input type="text" id="f-pptx-resp" placeholder="Nombre del integrante que coordina la presentación…"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-card-body">
+      <div class="field">
+        <label>Diario de campo general</label>
+        <textarea id="f-diario" rows="5" placeholder="Observaciones acumuladas, reflexiones, situaciones inesperadas, cambios de percepción entre visitas…"></textarea>
+      </div>
+      <div class="field">
+        <label>Documentos adicionales — link a Drive <span class="hint">— consentimientos, registros de asistencia…</span></label>
+        <input type="url" id="f-docs" placeholder="https://drive.google.com/drive/folders/…"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-wrap">
+    <div class="submit-msg" id="sub-msg"></div>
+    <button class="btn-submit" id="btn-enviar" onclick="enviar()">
+      <i class="ti ti-send"></i> Enviar reporte completo del grupo
+    </button>
+    <p class="submit-note">El docente podrá revisar el reporte desde el panel de acceso en esta misma página.</p>
+  </div>
+</div>
+
+<!-- ── PANEL DOCENTE ─────────────────────── -->
+<div class="view" id="view-docente">
+  <div class="doc-topstrip">
+    <div class="doc-top-left">
+      <div class="doc-top-icon"><i class="ti ti-school"></i></div>
+      <div>
+        <div class="doc-top-title">Panel Docente</div>
+        <div class="doc-top-sub">Msc. Bryan Carlos Palma Díaz · Intervención Psicosocial</div>
+      </div>
+    </div>
+    <div class="doc-top-actions">
+      <button class="btn-sm" onclick="cargarDatos()"><i class="ti ti-refresh"></i> Actualizar</button>
+      <button class="btn-sm" onclick="cerrarPanel()"><i class="ti ti-logout"></i> Salir</button>
+    </div>
+  </div>
+
+  <div class="stats-strip" id="stats-strip">
+    <div class="stat-box"><div class="sv" id="s-total">0</div><div class="sl">grupos enviaron</div></div>
+    <div class="stat-box"><div class="sv" id="s-comp">0</div><div class="sl">completos</div></div>
+    <div class="stat-box"><div class="sv" id="s-ses">0</div><div class="sl">sesiones totales</div></div>
+    <div class="stat-box"><div class="sv" id="s-links">0</div><div class="sl">links de Drive</div></div>
+  </div>
+
+  <div class="doc-filters">
+    <div class="search-wrap">
+      <i class="ti ti-search"></i>
+      <input type="text" id="doc-search" placeholder="Buscar por grupo, comunidad, modelo…" oninput="filtrar()"/>
+    </div>
+    <select id="doc-filter-modelo" onchange="filtrar()">
+      <option value="">Todos los modelos</option>
+    </select>
+    <select id="doc-filter-grupo" onchange="filtrar()">
+      <option value="">Todos los grupos</option>
+    </select>
+  </div>
+
+  <div id="grupos-lista"></div>
+  <div id="empty-doc" class="empty-doc" style="display:none">
+    <i class="ti ti-inbox"></i>
+    <p>Aún no hay reportes enviados.</p>
+    <p style="font-size:13px;margin-top:4px;color:var(--muted)">Cuando un grupo envíe su reporte, aparecerá aquí.</p>
+  </div>
+</div>
+
+</main>
+
+<!-- ══════════════════════════════════════════
+     LOGIN MODAL
+══════════════════════════════════════════ -->
+<div class="modal-bg" id="login-modal" style="display:none">
+  <div class="modal-card">
+    <div class="modal-ico"><i class="ti ti-lock"></i></div>
+    <h2>Acceso Docente</h2>
+    <p>Panel de revisión de reportes grupales<br/>Msc. Bryan Carlos Palma Díaz</p>
+    <div class="field">
+      <label>Contraseña</label>
+      <input type="password" id="pwd" placeholder="Ingrese la contraseña…" onkeydown="if(event.key==='Enter')login()"/>
+    </div>
+    <div class="login-err" id="login-err"><i class="ti ti-alert-circle"></i> Contraseña incorrecta</div>
+    <button class="btn-submit" style="margin-top:1rem" onclick="login()">
+      <i class="ti ti-login"></i> Ingresar
+    </button>
+    <button class="btn-cancel" onclick="cerrarLogin()"><i class="ti ti-x"></i> Cancelar</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     DETAIL MODAL
+══════════════════════════════════════════ -->
+<div class="det-overlay" id="det-overlay" onclick="clicarFuera(event)">
+  <div class="det-box" id="det-box">
+    <div class="det-head">
+      <div class="det-head-left">
+        <h2 id="det-titulo"></h2>
+        <p id="det-subtitulo"></p>
+      </div>
+      <button class="det-close" onclick="cerrarDetalle()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="det-body" id="det-body"></div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+//  CONFIG — EDITE ESTOS VALORES
+// ════════════════════════════════════════
+const CFG = {
+  PASSWORD: "psicosocial2025",        // ← cambie por su contraseña
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzWK8JiGsqdRQqkvqD4J742Lk-zWUxwvMjzeP2sBl7Zd3TJmDGp1p2aayxp2COwooM/exec",       // ← pegue la URL del Google Apps Script
+};
+
+// ════════════════════════════════════════
+//  TOGGLE "OTRO" INPUTS
+// ════════════════════════════════════════
+function toggleOtro(id, cb){
+  document.getElementById(id).style.display = cb.checked ? 'block' : 'none';
+  if(!cb.checked){
+    const txt = document.getElementById(id+'-txt');
+    if(txt) txt.value = '';
+  }
+}
+
+// ════════════════════════════════════════
+//  NAVEGACIÓN
+// ════════════════════════════════════════
+let activeTab = null;
+function switchView(id, btn) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+id).classList.add('active');
+  btn.classList.add('active');
+  activeTab = id;
+}
+
+// fecha de hoy
+document.addEventListener('DOMContentLoaded',()=>{
+  const fi = document.getElementById('f-fecha');
+  if(fi) fi.valueAsDate = new Date();
+  actualizarHeroStats();
+});
+
+// ════════════════════════════════════════
+//  SESIONES DINÁMICAS
+// ════════════════════════════════════════
+let sesCount = 1;
+function addSesion(){
+  sesCount++;
+  const div = document.createElement('div');
+  div.className='ses-block'; div.id='sesion-'+sesCount;
+  div.innerHTML=`
+    <div class="ses-label">
+      Sesión / Visita ${sesCount}
+      <button type="button" class="btn-del-ses" onclick="this.closest('.ses-block').remove()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="fg2">
+      <div class="field"><label>Fecha</label><input type="date" class="ses-fecha"/></div>
+      <div class="field"><label>Duración aprox.</label><input type="text" class="ses-duracion" placeholder="Ej: 2 horas"/></div>
+    </div>
+    <div class="field">
+      <label>Link a carpeta Drive con fotos de esta sesión</label>
+      <input type="url" class="ses-drive" placeholder="https://drive.google.com/drive/folders/…"/>
+    </div>
+    <div class="field">
+      <label>Descripción de lo realizado</label>
+      <textarea class="ses-desc" rows="3" placeholder="¿Qué actividades realizaron?…"></textarea>
+    </div>`;
+  document.getElementById('sesiones-extra').appendChild(div);
+}
+
+// ════════════════════════════════════════
+//  RECOPILAR DATOS
+// ════════════════════════════════════════
+function getChecked(name){
+  const otroMap = {
+    demo: 'demo-otro-txt',
+    prob: 'prob-otro-txt',
+    serv: 'serv-otro-txt',
+    enfoque: 'enfoque-otro-txt',
+  };
+  return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+    .map(c => {
+      if(c.value === '__otro__'){
+        const txt = document.getElementById(otroMap[name]);
+        return txt && txt.value.trim() ? 'Otro: ' + txt.value.trim() : '';
+      }
+      return c.value;
+    })
+    .filter(Boolean).join(', ');
+}
+function getSesiones(){
+  return Array.from(document.querySelectorAll('.ses-block')).map((b,i)=>({
+    numero: i+1,
+    fecha:    b.querySelector('.ses-fecha')?.value||'',
+    duracion: b.querySelector('.ses-duracion')?.value||'',
+    drive:    b.querySelector('.ses-drive')?.value||'',
+    desc:     b.querySelector('.ses-desc')?.value||'',
+  }));
+}
+
+// ════════════════════════════════════════
+//  VALIDAR Y ENVIAR
+// ════════════════════════════════════════
+function showMsg(tipo, txt){
+  const el = document.getElementById('sub-msg');
+  el.className = 'submit-msg '+tipo;
+  el.innerHTML = (tipo==='ok'?'<i class="ti ti-circle-check"></i> ':'<i class="ti ti-alert-circle"></i> ')+txt;
+  el.style.display='flex';
+  if(tipo==='ok') setTimeout(()=>el.style.display='none',6000);
+}
+
+function enviar(){
+  const g = document.getElementById('f-grupo').value;
+  const int = document.getElementById('f-integrantes').value.trim();
+  const mod = document.getElementById('f-modelo').value;
+  const com = document.getElementById('f-comunidad').value.trim();
+  if(!g||!int||!mod||!com){
+    showMsg('err','Complete al menos: grupo, integrantes, modelo y nombre de la comunidad antes de enviar.');
+    document.getElementById('view-grupo').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  const btn = document.getElementById('btn-enviar');
+  btn.disabled=true;
+  btn.innerHTML='<i class="ti ti-loader-2"></i> Enviando…';
+
+  const modelo = mod==='Otro'? document.getElementById('f-modelo-otro').value : mod;
+
+  const payload = {
+    grupo:g, fecha:document.getElementById('f-fecha').value,
+    integrantes:int, modelo:modelo,
+    comunidad:com, ciudad:document.getElementById('f-ciudad').value,
+    direccion:document.getElementById('f-direccion').value,
+    maps:document.getElementById('f-maps').value,
+    fotosComunidad:document.getElementById('f-fotos-comunidad').value,
+    descComunidad:document.getElementById('f-desc-comunidad').value,
+    demo:getChecked('demo'), problemas:getChecked('prob'),
+    descProblemas:document.getElementById('f-problemas').value,
+    servicios:getChecked('serv'),
+    riesgos:document.getElementById('f-riesgos').value,
+    fortalezas:document.getElementById('f-fortalezas').value,
+    plano:document.getElementById('f-plano').value,
+    descPlano:document.getElementById('f-desc-plano').value,
+    referencias:document.getElementById('f-referencias').value,
+    narrativa:document.getElementById('f-narrativa').value,
+    paradigma:(()=>{
+      const sel=document.querySelector('input[name="paradigma"]:checked');
+      if(!sel) return '';
+      if(sel.value==='__otro__'){
+        const t=document.getElementById('paradigma-otro-txt');
+        return t&&t.value.trim()?'Otro: '+t.value.trim():'Otro';
+      }
+      return sel.value;
+    })(),
+    enfoques:getChecked('enfoque'),
+    justificacion:document.getElementById('f-justificacion').value,
+    sintesis:document.getElementById('f-sintesis').value,
+    articulacion:document.getElementById('f-articulacion').value,
+    tecnicas:document.getElementById('f-tecnicas').value,
+    fase1:document.getElementById('f-fase1').value,
+    fase2:document.getElementById('f-fase2').value,
+    fase3:document.getElementById('f-fase3').value,
+    objetivo:document.getElementById('f-objetivo').value,
+    limitaciones:document.getElementById('f-limitaciones').value,
+    sesiones:JSON.stringify(getSesiones()),
+    pptx:document.getElementById('f-pptx').value,
+    pptxSlides:document.getElementById('f-pptx-slides').value,
+    pptxResp:document.getElementById('f-pptx-resp').value,
+    diario:document.getElementById('f-diario').value,
+    docsAdicionales:document.getElementById('f-docs').value,
+  };
+
+  guardarLocal(payload);
+
+  if(CFG.SCRIPT_URL && CFG.SCRIPT_URL !== 'PEGAR_URL_AQUI'){
+    fetch(CFG.SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .then(()=>{ showMsg('ok',`¡Reporte de ${g} enviado! El docente ya puede revisarlo.`); })
+    .catch(()=>{ showMsg('ok','Guardado localmente. Verifique conexión para envío al servidor.'); });
+  } else {
+    showMsg('ok',`Reporte de ${g} guardado. (Configure SCRIPT_URL para envío a Google Sheets)`);
+  }
+
+  btn.disabled=false;
+  btn.innerHTML='<i class="ti ti-send"></i> Enviar reporte completo del grupo';
+  actualizarHeroStats();
+}
+
+// ════════════════════════════════════════
+//  LOCAL STORAGE
+// ════════════════════════════════════════
+function guardarLocal(p){
+  let list = JSON.parse(localStorage.getItem('psi_reportes')||'[]');
+  const idx = list.findIndex(r=>r.grupo===p.grupo);
+  const entry = {...p, _ts: new Date().toISOString()};
+  if(idx>=0) list[idx]=entry; else list.push(entry);
+  localStorage.setItem('psi_reportes', JSON.stringify(list));
+}
+function cargarLocal(){
+  return JSON.parse(localStorage.getItem('psi_reportes')||'[]');
+}
+function actualizarHeroStats(){
+  const r = cargarLocal();
+  document.getElementById('hs-grupos').textContent = r.length;
+  let ses=0; r.forEach(x=>{ try{ses+=JSON.parse(x.sesiones||'[]').length}catch{} });
+  document.getElementById('hs-sesiones').textContent = ses;
+}
+
+// ════════════════════════════════════════
+//  LOGIN DOCENTE
+// ════════════════════════════════════════
+function abrirLogin(){
+  document.getElementById('login-modal').style.display='flex';
+  setTimeout(()=>document.getElementById('pwd').focus(),100);
+}
+function cerrarLogin(){
+  document.getElementById('login-modal').style.display='none';
+  document.getElementById('pwd').value='';
+  document.getElementById('login-err').classList.remove('show');
+}
+function login(){
+  const pwd = document.getElementById('pwd').value;
+  if(pwd===CFG.PASSWORD){
+    cerrarLogin();
+    abrirPanel();
+  } else {
+    document.getElementById('login-err').classList.add('show');
+    document.getElementById('pwd').value='';
+    document.getElementById('pwd').focus();
+  }
+}
+function abrirPanel(){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-docente').classList.add('active');
+  cargarDatos();
+}
+function cerrarPanel(){
+  switchView('guia', document.querySelector('.nav-tab'));
+  document.querySelector('.nav-tab').classList.add('active');
+}
+
+// ════════════════════════════════════════
+//  PANEL DOCENTE — DATOS
+// ════════════════════════════════════════
+let allReportes = [];
+
+function cargarDatos(){
+  allReportes = cargarLocal();
+  if(CFG.SCRIPT_URL && CFG.SCRIPT_URL!=='PEGAR_URL_AQUI'){
+    fetch(CFG.SCRIPT_URL+'?action=getAll')
+      .then(r=>r.json())
+      .then(data=>{
+        if(data?.reportes?.length){
+          const fromServer = data.reportes;
+          const sgs = new Set(fromServer.map(r=>r.grupo));
+          const localOnly = allReportes.filter(r=>!sgs.has(r.grupo));
+          allReportes = [...fromServer,...localOnly];
+        }
+        renderPanel();
+      }).catch(()=>renderPanel());
+  } else { renderPanel(); }
+}
+
+function renderPanel(){
+  actualizarStats();
+  llenarFiltros();
+  renderGrupos(allReportes);
+}
+
+function actualizarStats(){
+  const n = allReportes.length;
+  const comp = allReportes.filter(r=>r.comunidad&&r.modelo&&r.integrantes&&r.sintesis).length;
+  let ses=0, links=0;
+  allReportes.forEach(r=>{
+    try{ses+=JSON.parse(r.sesiones||'[]').length}catch{}
+    if(r.fotosComunidad) links++;
+    if(r.plano) links++;
+    if(r.pptx) links++;
+    if(r.docsAdicionales) links++;
+    try{ JSON.parse(r.sesiones||'[]').forEach(s=>{if(s.drive)links++}); }catch{}
+  });
+  document.getElementById('s-total').textContent=n;
+  document.getElementById('s-comp').textContent=comp;
+  document.getElementById('s-ses').textContent=ses;
+  document.getElementById('s-links').textContent=links;
+  actualizarHeroStats();
+}
+
+function llenarFiltros(){
+  const modelos=[...new Set(allReportes.map(r=>r.modelo).filter(Boolean))].sort();
+  const grupos=[...new Set(allReportes.map(r=>r.grupo).filter(Boolean))].sort();
+  const sm=document.getElementById('doc-filter-modelo');
+  sm.innerHTML='<option value="">Todos los modelos</option>';
+  modelos.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;sm.appendChild(o)});
+  const sg=document.getElementById('doc-filter-grupo');
+  sg.innerHTML='<option value="">Todos los grupos</option>';
+  grupos.forEach(g=>{const o=document.createElement('option');o.value=g;o.textContent=g;sg.appendChild(o)});
+}
+
+function filtrar(){
+  const q=document.getElementById('doc-search').value.toLowerCase();
+  const fm=document.getElementById('doc-filter-modelo').value;
+  const fg=document.getElementById('doc-filter-grupo').value;
+  const fil=allReportes.filter(r=>{
+    const t=`${r.grupo} ${r.comunidad} ${r.modelo} ${r.integrantes}`.toLowerCase();
+    return (!q||t.includes(q))&&(!fm||r.modelo===fm)&&(!fg||r.grupo===fg);
+  });
+  renderGrupos(fil);
+}
+
+const COLORS=['c0','c1','c2','c3'];
+function renderGrupos(lista){
+  const cont=document.getElementById('grupos-lista');
+  const emp=document.getElementById('empty-doc');
+  if(!lista.length){ cont.innerHTML=''; emp.style.display='block'; return; }
+  emp.style.display='none';
+  cont.innerHTML=lista.map((r,i)=>{
+    let sesC=0; try{sesC=JSON.parse(r.sesiones||'[]').length}catch{}
+    const cl=COLORS[i%4];
+    const av=(r.grupo||'?').replace('Grupo ','G');
+    const fecha=r.fecha? new Date(r.fecha+'T12:00:00').toLocaleDateString('es-EC',{day:'numeric',month:'short',year:'numeric'}):'';
+    const idx=allReportes.indexOf(r);
+    return `<div class="grupo-card" onclick="abrirDetalle(${idx})">
+      <div class="gc-head">
+        <div class="gc-av ${cl}">${av}</div>
+        <div class="gc-info">
+          <div class="gc-nombre">${r.grupo||'Grupo sin nombre'}</div>
+          <div class="gc-sub">${r.integrantes? trunc(r.integrantes,75):'Sin integrantes registrados'}</div>
+        </div>
+        <div class="gc-badges">
+          ${r.modelo?`<span class="badge modelo">${trunc(r.modelo,32)}</span>`:''}
+          ${fecha?`<span class="badge fecha">${fecha}</span>`:''}
+          ${sesC?`<span class="badge ses">${sesC} sesión${sesC>1?'es':''}</span>`:''}
+        </div>
+      </div>
+      <div class="gc-foot">
+        <span class="gc-loc"><i class="ti ti-map-pin"></i>${r.comunidad? r.comunidad+(r.ciudad?', '+r.ciudad:''):'<em>Comunidad no especificada</em>'}</span>
+        ${r.maps?`<a href="${r.maps}" target="_blank" class="btn-maps" onclick="event.stopPropagation()"><i class="ti ti-map"></i> Maps</a>`:''}
+        <div class="gc-actions">
+          <button class="btn-ver" onclick="abrirDetalle(${idx});event.stopPropagation()"><i class="ti ti-eye"></i> Ver reporte</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function trunc(s,n){ return s&&s.length>n? s.slice(0,n)+'…':(s||''); }
+
+// ════════════════════════════════════════
+//  DETALLE MODAL
+// ════════════════════════════════════════
+function abrirDetalle(idx){
+  const r=allReportes[idx]; if(!r) return;
+  document.getElementById('det-titulo').textContent=r.grupo||'Grupo sin nombre';
+  document.getElementById('det-subtitulo').textContent=r.modelo||'';
+  let ses=[]; try{ses=JSON.parse(r.sesiones||'[]')}catch{}
+  const integ=(r.integrantes||'').split(',').map(s=>s.trim()).filter(Boolean);
+
+  document.getElementById('det-body').innerHTML=`
+    <div class="det-sec">
+      <div class="det-sec-title"><i class="ti ti-users"></i> Integrantes del grupo</div>
+      <div>${integ.map(i=>`<span class="integ-pill">${i}</span>`).join('')||'<span class="det-val empty">No registrado</span>'}</div>
+      ${r.fecha?`<div class="det-field" style="margin-top:.75rem"><div class="det-lbl">Fecha de envío</div><div class="det-val">${r.fecha}</div></div>`:''}
+    </div>
+    <div class="det-sec">
+      <div class="det-sec-title"><i class="ti ti-map-pin"></i> Comunidad</div>
+      ${df('Sector',r.comunidad)}${df('Ciudad',r.ciudad)}${df('Dirección',r.direccion)}
+      ${r.maps?`<div class="det-field"><div class="det-lbl">Ubicación</div><a href="${r.maps}" target="_blank" class="det-link"><i class="ti ti-map"></i> Google Maps</a></div>`:''}
+      ${r.fotosComunidad?`<div class="det-field"><div class="det-lbl">Fotos del sector</div><a href="${r.fotosComunidad}" target="_blank" class="det-link"><i class="ti ti-brand-google-drive"></i> Carpeta Drive</a></div>`:''}
+      ${df('Descripción general',r.descComunidad)}
+    </div>
+    <div class="det-sec">
+      <div class="det-sec-title"><i class="ti ti-clipboard-list"></i> Diagnóstico</div>
+      ${dft('Grupos poblacionales',r.demo)}${dft('Problemáticas',r.problemas)}
+      ${df('Descripción de problemas',r.descProblemas)}
+      ${dft('Servicios básicos',r.servicios)}
+      ${df('Zonas de riesgo',r.riesgos)}${df('Recursos y fortalezas',r.fortalezas)}
+    </div>
+    <div class="det-sec">
+      <div class="det-sec-title"><i class="ti ti-map-2"></i> Plano del sector</div>
+      ${r.plano?`<div class="det-field"><div class="det-lbl">Archivo del plano</div><a href="${r.plano}" target="_blank" class="det-link"><i class="ti ti-brand-google-drive"></i> Ver en Drive</a></div>`:''}
+      ${df('Descripción',r.descPlano)}${df('Referencias geográficas',r.referencias)}
+    </div>
+    <div class="det-sec">
+      <div class="det-sec-title"><i class="ti ti-brain"></i> Paradigma y enfoque</div>
+      ${df('Narrativa comunitaria',r.narrativa)}${df('Paradigma',r.paradigma)}
+      ${dft('Enfoques',r.enfoques)}${df('Justificación',r.justificacion)}
+    </div>
+    <div class="det-sec">
+      <div class="det-sec-title"><i class="ti ti-bulb"></i> Propuesta de intervención</div>
+      ${df('Síntesis',r.sintesis)}${df('Articulación con el modelo',r.articulacion)}
+      ${dft('Técnicas propuestas',r.tecnicas)}
+      ${df('Fase 1',r.fase1)}${df('Fase 2',r.fase2)}${df('Fase 3',r.fase3)}
+      ${df('Objetivo general',r.objetivo)}${df('Limitaciones',r.limitaciones)}
+    </div>
+    <div class="det-sec">
+      <div class="det-sec-title"><i class="ti ti-camera"></i> Sesiones de campo</div>
+      ${ses.length? ses.map((s,i)=>`
+        <div class="ses-det">
+          <div class="ses-det-lbl">Sesión ${i+1}</div>
+          <div class="ses-det-meta">${s.fecha||'—'} · ${s.duracion||'—'}</div>
+          ${s.drive?`<a href="${s.drive}" target="_blank" class="det-link"><i class="ti ti-brand-google-drive"></i> Fotos de esta sesión</a>`:''}
+          <div class="det-val" style="margin-top:6px;font-size:13px">${s.desc||'<em>Sin descripción</em>'}</div>
+        </div>`).join('')
+      :'<span class="det-val empty">Sin sesiones registradas</span>'}
+    </div>
+    <div class="det-sec">
+      <div class="det-sec-title"><i class="ti ti-notebook"></i> Diario y documentos</div>
+      ${df('Diario de campo',r.diario)}
+      ${r.docsAdicionales?`<div class="det-field"><div class="det-lbl">Documentos adicionales</div><a href="${r.docsAdicionales}" target="_blank" class="det-link"><i class="ti ti-brand-google-drive"></i> Carpeta de documentos</a></div>`:''}
+    </div>
+    <div class="det-sec">
+      <div class="det-sec-title"><i class="ti ti-presentation"></i> Presentación de hallazgos</div>
+      ${r.pptx?`<div class="det-field"><div class="det-lbl">Presentación PowerPoint / Slides</div><a href="${r.pptx}" target="_blank" class="det-link" style="background:var(--indigo-light);border-color:var(--indigo);color:var(--indigo)"><i class="ti ti-presentation"></i> Abrir presentación</a></div>`:df('Presentación','')}
+      ${df('Número de diapositivas',r.pptxSlides)}
+      ${df('Responsable de la presentación',r.pptxResp)}
+    </div>`;
+
+  document.getElementById('det-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function df(lbl,val){
+  const e=!val||!val.toString().trim();
+  return `<div class="det-field"><div class="det-lbl">${lbl}</div><div class="det-val${e?' empty':''}">${e?'No registrado':val.toString().replace(/\n/g,'<br>')}</div></div>`;
+}
+function dft(lbl,val){
+  if(!val||!val.trim()) return df(lbl,'');
+  const items=val.split(',').map(s=>s.trim()).filter(Boolean);
+  return `<div class="det-field"><div class="det-lbl">${lbl}</div><div class="det-tags">${items.map(t=>`<span class="det-tag">${t}</span>`).join('')}</div></div>`;
+}
+
+function cerrarDetalle(){ document.getElementById('det-overlay').classList.remove('open'); document.body.style.overflow=''; }
+function clicarFuera(e){ if(e.target.id==='det-overlay') cerrarDetalle(); }
+</script>
+</body>
+</html>
